@@ -11,7 +11,9 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB URI
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ynxz4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ynxz4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri =
+  "mongodb+srv://baler_backend:kahonbintezaman@cluster0.80ztv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // MongoDB Client Configuration
 const client = new MongoClient(uri, {
@@ -27,12 +29,13 @@ async function run() {
     // Connect the client to the MongoDB server
     await client.connect();
     const userCollection = client.db("coffeeDB").collection("user");
-    const coffeeCollection = client.db("coffeeDB").collection("coffee");
+    const coffeeCollection = client.db("all_coffee").collection("coffee");
 
     // GET endpoint to fetch all coffee
     app.get("/coffee", async (req, res) => {
       const cursor = coffeeCollection.find();
       const result = await cursor.toArray();
+      console.log(result);
       res.send(result);
     });
 
